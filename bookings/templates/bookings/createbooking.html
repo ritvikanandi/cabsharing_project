@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 
 {% if error %}
 {{ error }}
@@ -10,15 +10,22 @@
 <br />
 {% endif %}
 
+   <div class = "container book-container">
 
- <div class="card">
-   <div class = "container">
-     <h1>Create a Booking</h1>
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ booking_form|crispy }}
-    <input type="submit" class="btn btn-success" value="Submit">
-  </form>
+     <div class="row">
+       <div class="col-md-5">
+         <img src="{% static 'feedback.png' %}" width = "280" class="img-fluid">
+         <br><br><br>
+         <h3>Create a Booking</h3>
+       </div>
+       <div class="col-md-7">
+         <form action="{% url 'createbooking' %}" method="POST">
+           {% csrf_token %}
+           {{ booking_form|crispy }}
+           <input type="submit" class="btn btn-outline-success" value="Submit">
+         </form>
+       </div>
+     </div>
   </div>
- </div
+
 {% endblock %}

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+
 class createbooking(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
     time = models.TimeField(help_text="format (hh:mm:ss)")
@@ -18,4 +20,9 @@ class createbooking(models.Model):
 
 
 
-# Create your models here.
+class Feedback(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE , blank=True)
+    details = models.TextField()
+
+    def __str__(self):
+        return self.user.username

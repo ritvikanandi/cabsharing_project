@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <link href="{% static 'open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
     <!-- Favicons -->
+<link rel="stylesheet" type="text/css" href="{% static 'cabsharing/style.css' %}">
 <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
@@ -47,16 +48,17 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #7510A4;">
-      <a class="navbar-brand" href="">CAB SHARING</a>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">CAB SHARING</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
+          <a class="nav-item nav-link active" href="{% url 'user_profile' user.id %}"><i class="far fa-user-circle fa-lg"></i> {{user.username}}</a>
+          <a class="nav-item nav-link active" href="{% url 'createbooking' %}">Create</a>
           <a class="nav-item nav-link active" href="{% url 'logout' %}">Logout</a>
-          <a class="nav-item nav-link active" href="{% url 'createbooking' %}">Create a Booking</a>
           {% else %}
           <a class="nav-item nav-link active" href="{% url 'signup' %}">Sign Up</a>
           <a class="nav-item nav-link active" href="{% url 'signin' %}">Login</a>
@@ -73,7 +75,7 @@
 </div>
 
 <footer class="text-muted">
-  <div class="container">
+  <div class="container footer-container">
   </div>
 </footer>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
