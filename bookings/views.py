@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import FeedbackForm
+from .forms import FeedbackForm, BookingForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import createbooking
 
 # Create your views here.
-def home(request):
+def main(request):
     return render(request, 'bookings/home.html')
 
-@login_required
-def bookings(request):
-    return render(request, 'bookings/index.html')
+def home(request):
+    books = createbooking.objects
+    return render(request, 'bookings/index.html', {'books': books})
 
 
 @login_required
@@ -26,3 +27,22 @@ def feedback_view(request):
     else:
         form = FeedbackForm()
         return render(request, 'bookings/feedback.html', {'form': form})
+
+
+@login_required
+def create_booking(request):
+    if request.method=='POST':
+        booking_form = BookingForm(request.POST)
+
+        if booking_form.is_valid():
+            booking = booking_form.save(commit=False)
+            if(booking.pickup == booking.destination):
+                return render(request, 'bookings/createbooking.html',{'error':'The pickup location and destination should be different'})
+            booking.user = request.user
+            booking.save()
+            return redirect('bookings')
+        else:
+            return render(request,'bookings/createbooking.html',{'booking_form':booking_form})
+    else:
+        booking_form = BookingForm()
+        return render(request,'bookings/createbooking.html',{'booking_form':booking_form})
