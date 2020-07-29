@@ -12,5 +12,5 @@ class BookingForm(forms.ModelForm):
     budget = forms.CharField(label = "Your budget")
 
     class Meta:
-        model = User
+        model = createbooking
         fields = ['time', 'date', 'pickup', 'destination', 'luggage', 'budget']

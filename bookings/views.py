@@ -14,9 +14,10 @@ def createbooking(request):
         if booking_form.is_valid():
             booking = booking_form.save(commit=False)
             booking.user=request.user
+
             pickup = booking_form.cleaned_data.get("pickup")
             destination = booking_form.cleaned_data.get("destination")
-            if pickup == destination:
+            if( pickup == destination):
                 return render(request, 'bookings/createbooking.html',{'error':'The pickup location and destination should be different'})
             else:
                 booking.save()
