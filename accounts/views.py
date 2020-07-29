@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import auth
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
@@ -37,3 +37,7 @@ def signup(request):
         user_form = UserForm();
         details_form = DetailsForm();
         return render(request, 'accounts/signup.html', {'user_form': user_form, 'details_form': details_form})
+
+def user_profile(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'accounts/profile.html', {'user': user})
