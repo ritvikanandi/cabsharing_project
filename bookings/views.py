@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import FeedbackForm, BookingForm
+from .forms import FeedbackForm, BookingForm, MemberForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .models import createbooking
+from .models import createbooking, Member
+from django.contrib import messages
+
 
 # Create your views here.
 def main(request):
@@ -46,3 +48,58 @@ def create_booking(request):
     else:
         booking_form = BookingForm()
         return render(request,'bookings/createbooking.html',{'booking_form':booking_form})
+
+@login_required
+def join_booking(request, booking_id):
+    booking = get_object_or_404(createbooking, pk=booking_id)
+    if request.method == 'POST':
+        form=MemberForm(request.POST)
+        if form.is_valid():
+            people=booking.members.all()
+            for any in people:
+                if(request.user.username == any.user.username):
+                    return redirect('bookings')
+            if (request.user.username==booking.user):
+                return redirect('bookings')
+            if(booking.peopletogether < 4):
+                booking.peopletogether += 1
+                booking.save()
+            member=form.save(commit=False)
+            member.booking= booking
+            member.user = request.user
+            member.save()
+            return redirect('bookings')
+    else:
+        form = MemberForm()
+        return render(request, 'bookings/member_join.html', {'form':form})
+
+
+@login_required
+def leave_booking(request, booking_id):
+    booking=get_object_or_404(createbooking, pk=booking_id)
+    if request.method=='POST':
+        leaveform=MemberForm(request.POST)
+        if leaveform.is_valid():
+            try:
+                member=booking.members.get(user=request.user)
+                member.delete()
+                if(booking.peopletogether > 0):
+                    booking.peopletogether -= 1
+                    booking.save()
+                return redirect('bookings')
+            except Member.DoesNotExist:
+                return redirect('bookings')
+    else:
+        leaveform=MemberForm()
+        people=booking.members.all()
+        for any in people:
+            if(request.user.username == any.user.username):
+                return render(request, 'bookings/member_leave.html', {'leaveform':leaveform})
+
+        return redirect('bookings')
+
+
+
+def booking_info(request, booking_id):
+    booking = get_object_or_404(createbooking, pk=booking_id)
+    return render(request, 'bookings/details.html', {'booking': booking})
