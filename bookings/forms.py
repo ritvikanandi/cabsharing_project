@@ -18,11 +18,8 @@ class BookingForm(forms.ModelForm):
     peopletogether = forms.IntegerField(label = "People Together")
     luggage = forms.DecimalField(widget = forms.NumberInput, label = "Amount of luggage",)
     budget = forms.CharField(label = "Your budget")
+    max = forms.IntegerField(label = "Maximum members")
 
     class Meta:
         model = createbooking
-<<<<<<< HEAD
-        fields = ['time', 'date', 'pickup', 'destination', 'luggage', 'budget']
-=======
-        fields = ['time', 'date', 'pickup', 'destination' ,'peopletogether', 'luggage', 'budget']
->>>>>>> 9707b91aa08f71c60f8b3f3b605d7bd060254610
+        fields = ['time', 'date', 'pickup', 'destination' ,'peopletogether', 'luggage', 'budget','max']

@@ -22,14 +22,14 @@
         <h3 class="card-title">{{booking.pickup}} to {{booking.destination}}</h3>
         <h6>Time: {{booking.time}}</h6>
         <h6>Date: {{booking.date}}</h6>
-        <h6>Members: {{booking.peopletogether}}</h6>
+      <h6>Members: {{booking.members_total}}</h6>
         <h6>Budget: {{booking.budget}}</h6>
         <h6>luggage: {{booking.luggage}}</h6>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-primary btn-block float-right">Join</a>
+        <a href="javascript:{document.getElementById('join{{ booking.id }}').submit()}" class="btn btn-primary btn-block float-right">Join</a>
         <br><br>
-        <a href="#" class="btn btn-danger btn-block float-right" >Leave</a>
+        <a href="javascript:{document.getElementById('leave{{ booking.id }}').submit()}" class="btn btn-danger btn-block float-right" >Leave</a>
         <br><br>
         <a href="#" class="btn btn-warning btn-block float-right">Chat</a>
         <br><br>
@@ -39,6 +39,16 @@
     </div>
    </div>
    </div>
+
+   <form id="join{{ booking.id }}" method="POST" action="{% url 'join' booking.id %}">
+  {% csrf_token%}
+  <input type="hidden">
+</form>
+
+<form id="leave{{ booking.id }}" method="POST" action="{% url 'leave' booking.id %}">
+  {% csrf_token%}
+  <input type="hidden">
+</form>
 
    {%  endfor %}
 {% endblock %}

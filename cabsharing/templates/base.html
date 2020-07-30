@@ -59,6 +59,7 @@
           <a class="nav-item nav-link active" href="{% url 'user_profile' user.id %}"><i class="far fa-user-circle fa-lg"></i> {{user.username}}</a>
           <a class="nav-item nav-link active" href="{% url 'createbooking' %}">Create</a>
           <a class="nav-item nav-link active" href="{% url 'logout' %}">Logout</a>
+          <a class="nav-item nav-link active" href="{% url 'update' %}">Update</a>
           {% else %}
           <a class="nav-item nav-link active" href="{% url 'signup' %}">Sign Up</a>
           <a class="nav-item nav-link active" href="{% url 'signin' %}">Login</a>
