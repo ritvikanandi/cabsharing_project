@@ -10,7 +10,7 @@ class createbooking(models.Model):
     pickup = models.CharField(max_length=255)
     destination = models.CharField(max_length=255)
     luggage = models.DecimalField(help_text="Please enter the value in kg maximum upto two decimal places", decimal_places=2, max_digits=5)
-    peopletogether = models.IntegerField(default=0)
+    peopletogether = models.IntegerField(default=1)
     budget = models.CharField(max_length=50)
     is_drop = models.BooleanField(default=False)
 
@@ -26,3 +26,8 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    booking = models.ForeignKey('createbooking', on_delete=models.CASCADE, related_name='members')

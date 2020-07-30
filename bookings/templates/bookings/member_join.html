@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+  {% load static %}
+{% block content %}
+
+   <div class="container leave-container">
+     <div class="row">
+       <div class="col-md-4">
+         <img src="{% static 'question-mark.png' %}" width = "300" class="img-fluid">
+       </div>
+       <div class="col-md-8">
+         <form method="POST">
+           {% csrf_token %}
+           <h1>Are you sure you want to join this booking?</h1>
+           <br><br>
+           {{form}}
+           <input type="submit" value="Join" class='btn btn-outline-secondary btn-lg'>
+         </form>
+       </div>
+     </div>
+    </div>
+
+{% endblock %}

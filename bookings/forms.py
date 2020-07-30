@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Feedback
-from .models import createbooking
+from .models import createbooking, Member
 import datetime
 
 class FeedbackForm(forms.ModelForm):
@@ -22,3 +22,9 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = createbooking
         fields = ['time', 'date', 'pickup', 'destination' ,'peopletogether', 'luggage', 'budget']
+
+
+class MemberForm(forms.ModelForm):
+    class Meta():
+        model=Member
+        fields=[]
