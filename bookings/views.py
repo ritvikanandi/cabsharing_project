@@ -4,15 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import createbooking, Member
 from django.contrib import messages
-<<<<<<< HEAD
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 import datetime
-
-=======
 from .filters import BookingFilter
->>>>>>> 9e2817d107a45a4ecd9d9694100416406b8ecd12
 
 
 # Create your views here.
@@ -140,6 +136,21 @@ def update_booking(request, booking_id):
     else:
         booking_form=BookingForm()
         return render (request, "bookings/update.html", {'booking_form':booking_form})
+
+@login_required
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(createbooking, pk=booking_id)
+    if request.method=='POST':
+        if(booking.user == request.user):
+            booking.delete()
+            return redirect('bookings')
+        else:
+            return render (request, 'bookings/details.html', {'error': 'You cannot delete this booking!'})
+    else:
+        return render(request, 'bookings/delete.html')
+
+    return redirect('bookings')
+
 
 def filter_bookings(request):
     list = createbooking.objects.all()

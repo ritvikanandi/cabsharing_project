@@ -8,9 +8,7 @@ urlpatterns = [
     path('<int:booking_id>/join', views.join_booking, name='join'),
     path('<int:booking_id>/leave', views.leave_booking, name='leave'),
     path('<int:booking_id>/info', views.booking_info, name='booking_info'),
-<<<<<<< HEAD
     path('<int:booking_id>/update', views.update_booking, name='update'),
-=======
+    path('<int:booking_id>/delete', views.delete_booking, name='delete'),
     path('filter/', views.filter_bookings, name = 'filter'),
->>>>>>> 9e2817d107a45a4ecd9d9694100416406b8ecd12
 ]
