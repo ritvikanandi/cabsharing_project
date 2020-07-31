@@ -25,47 +25,28 @@
    </div>
 
 
-
-<div class="row" style="margin-top:2rem">
-  <div class="col-md-9 float-left">
-    <button class="btn btn-outline-secondary btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-       <i class="fas fa-filter"></i>  Filter
-    </button>
-  </div>
-  <br><br><br>
-  <div class="collapse" id="collapseExample">
-    <form method="GET">
-     <div class="well">
-       <div class="row">
-         <div class="form-group col-sm-4 col-md-3">
-           {{ filter.form.destination.label_tag }}
-           {% render_field filter.form.destination class="form-control" %}
-         </div>
-         <div class="form-group col-sm-4 col-md-3">
-           {{ filter.form.pickup.label_tag }}
-           {% render_field filter.form.pickup class="form-control" %}
-         </div>
-         <div class="form-group col-sm-4 col-md-3">
-           {{ filter.form.date.label_tag }}
-           {% render_field filter.form.date class="form-control" %}
-         </div>
-         <div class="form-group col-sm-4 col-md-3">
-           {{ filter.form.time.label_tag }}
-           {% render_field filter.form.time class="form-control" %}
-         </div>
-       </div>
-       <div class="text-left">
-         <button type="submit" class="btn btn-success">
-           <span class="glyphicon glyphicon-search"></span> Search
-         </button>
-         <br>
-       </div>
-     </div>
-   </form>
-  </div>
-
-</div>
-
+   <form method="GET">
+    <div class="well">
+      <h4 style="margin-top: 0">Filter</h4>
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.destination.label_tag }}
+          {% render_field filter.form.destination class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.pickup.label_tag }}
+          {% render_field filter.form.pickup class="form-control" %}
+        </div>
+        <div class="form-group col-sm-4 col-md-3">
+          {{ filter.form.date.label_tag }}
+          {% render_field filter.form.date class="form-control" %}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+    </div>
+  </form>
 
 {% for booking in filter.qs %}
  {% if booking.peopletogether == 4 %}

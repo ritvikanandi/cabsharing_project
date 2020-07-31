@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import createbooking, Member
 from django.contrib import messages
+from .filters import BookingFilter
 
 
 # Create your views here.
@@ -59,7 +60,7 @@ def join_booking(request, booking_id):
             for any in people:
                 if(request.user.username == any.user.username):
                     return redirect('bookings')
-            if (request.user.username==booking.user):
+            if (request.user.username == booking.user.username):
                 return redirect('bookings')
             if(booking.peopletogether < 4):
                 booking.peopletogether += 1
@@ -71,7 +72,10 @@ def join_booking(request, booking_id):
             return redirect('bookings')
     else:
         form = MemberForm()
-        return render(request, 'bookings/member_join.html', {'form':form})
+        if(booking.user.username == request.user.username):
+            return redirect('bookings')
+        else:
+            return render(request, 'bookings/member_join.html', {'form':form})
 
 
 @login_required
@@ -103,3 +107,9 @@ def leave_booking(request, booking_id):
 def booking_info(request, booking_id):
     booking = get_object_or_404(createbooking, pk=booking_id)
     return render(request, 'bookings/details.html', {'booking': booking})
+
+
+def filter_bookings(request):
+    list = createbooking.objects.all()
+    filter = BookingFilter(request.GET, queryset=list)
+    return render(request, 'bookings/index.html', {'filter': filter})
