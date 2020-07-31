@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:booking_id>/join', views.join_booking, name='join'),
     path('<int:booking_id>/leave', views.leave_booking, name='leave'),
     path('<int:booking_id>/info', views.booking_info, name='booking_info'),
+    path('<int:booking_id>/update', views.update_booking, name='update'),
 ]
