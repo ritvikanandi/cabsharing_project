@@ -4,11 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import createbooking, Member
 from django.contrib import messages
+<<<<<<< HEAD
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 import datetime
 
+=======
+from .filters import BookingFilter
+>>>>>>> 9e2817d107a45a4ecd9d9694100416406b8ecd12
 
 
 # Create your views here.
@@ -64,7 +68,7 @@ def join_booking(request, booking_id):
             for any in people:
                 if(request.user.username == any.user.username):
                     return redirect('bookings')
-            if (request.user.username==booking.user):
+            if (request.user.username == booking.user.username):
                 return redirect('bookings')
             if(booking.peopletogether < 4):
                 booking.peopletogether += 1
@@ -76,7 +80,10 @@ def join_booking(request, booking_id):
             return redirect('bookings')
     else:
         form = MemberForm()
-        return render(request, 'bookings/member_join.html', {'form':form})
+        if(booking.user.username == request.user.username):
+            return redirect('bookings')
+        else:
+            return render(request, 'bookings/member_join.html', {'form':form})
 
 
 @login_required
@@ -133,3 +140,8 @@ def update_booking(request, booking_id):
     else:
         booking_form=BookingForm()
         return render (request, "bookings/update.html", {'booking_form':booking_form})
+
+def filter_bookings(request):
+    list = createbooking.objects.all()
+    filter = BookingFilter(request.GET, queryset=list)
+    return render(request, 'bookings/index.html', {'filter': filter})
