@@ -105,7 +105,7 @@
             <br><br>
             <a href="{% url 'leave' booking.id %}" class="btn btn-danger btn-block float-right" >Leave</a>
             <br><br>
-            <a href="#" class="btn btn-warning btn-block float-right">Chat</a>
+            <a href= "{%url 'chat:room' booking.user %}" class="btn btn-warning btn-block float-right">Chat</a>
             <br><br>
             <a href="{% url 'booking_info' booking.id%}" class="btn btn-secondary btn-block float-right">Info</a>
 

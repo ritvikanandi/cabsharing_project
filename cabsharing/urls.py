@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.main, name='home'),
     path('accounts/', include('accounts.urls')),
     path('bookings/', include('bookings.urls')),
+    path('chat/',include('chat.urls',namespace='chat')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
