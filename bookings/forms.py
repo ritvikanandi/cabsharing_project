@@ -16,7 +16,7 @@ class BookingForm(forms.ModelForm):
     pickup = forms.CharField(label = "Pick Up Location")
     destination = forms.CharField(label = "Drop Location")
     peopletogether = forms.IntegerField(label = "People Together")
-    luggage = forms.DecimalField(widget = forms.NumberInput, label = "Amount of luggage",)
+    luggage = forms.DecimalField(widget = forms.NumberInput, label = "Amount of luggage (in kg)",)
     budget = forms.CharField(label = "Your budget")
 
     class Meta:

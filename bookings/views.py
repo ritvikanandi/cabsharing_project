@@ -132,10 +132,13 @@ def update_booking(request, booking_id):
                 booking.peopletogether=booking_form.peopletogether
                 booking.save()
                 return redirect('bookings')
-        return render(request,'bookings/update.html',{'booking_form':booking_form})
+            return render(request, "bookings/update.html", {'booking_form':booking_form})
     else:
         booking_form=BookingForm()
-        return render (request, "bookings/update.html", {'booking_form':booking_form})
+        if(booking.user == request.user):
+            return render(request, "bookings/update.html", {'booking_form':booking_form})
+        else:
+            return render(request, "bookings/home.html", {'error':'You cannot update this booking!'})
 
 @login_required
 def delete_booking(request, booking_id):
@@ -145,7 +148,7 @@ def delete_booking(request, booking_id):
             booking.delete()
             return redirect('bookings')
         else:
-            return render (request, 'bookings/details.html', {'error': 'You cannot delete this booking!'})
+            return render(request, 'bookings/home.html', {'error': 'You cannot delete this booking!'})
     else:
         return render(request, 'bookings/delete.html')
 
