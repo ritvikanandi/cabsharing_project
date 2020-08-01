@@ -72,6 +72,14 @@
     </nav>
 </header>
 
+{% if error %}
+
+  <div class="alert alert-danger" role="alert">
+  {{error}}
+  </div>
+
+{% endif %}
+
 <div class = "container mt-5">
     <h1 class="display-2">Want to share a ride?</h1>
     <h5>Join a pool now.</h5>

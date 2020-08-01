@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import createbooking, Member
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+import datetime
 from .filters import BookingFilter
 
 
@@ -107,6 +111,48 @@ def leave_booking(request, booking_id):
 def booking_info(request, booking_id):
     booking = get_object_or_404(createbooking, pk=booking_id)
     return render(request, 'bookings/details.html', {'booking': booking})
+
+@login_required
+def update_booking(request, booking_id):
+    booking = get_object_or_404(createbooking, pk=booking_id)
+    if request.method=='POST':
+        booking_form=BookingForm(request.POST)
+        if booking_form.is_valid():
+            booking_form=booking_form.save(commit=False)
+            if(booking_form.date <datetime.date.today()):
+                return redirect('bookings')
+            if (booking.user == request.user):
+                booking=createbooking.objects.get(pk=booking_id)
+                booking.pickup=booking_form.pickup
+                booking.destination=booking_form.destination
+                booking.date=booking_form.date
+                booking.time=booking_form.time
+                booking.budget=booking_form.budget
+                booking.luggage=booking_form.luggage
+                booking.peopletogether=booking_form.peopletogether
+                booking.save()
+                return redirect('bookings')
+            return render(request, "bookings/update.html", {'booking_form':booking_form})
+    else:
+        booking_form=BookingForm()
+        if(booking.user == request.user):
+            return render(request, "bookings/update.html", {'booking_form':booking_form})
+        else:
+            return render(request, "bookings/home.html", {'error':'You cannot update this booking!'})
+
+@login_required
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(createbooking, pk=booking_id)
+    if request.method=='POST':
+        if(booking.user == request.user):
+            booking.delete()
+            return redirect('bookings')
+        else:
+            return render(request, 'bookings/home.html', {'error': 'You cannot delete this booking!'})
+    else:
+        return render(request, 'bookings/delete.html')
+
+    return redirect('bookings')
 
 
 def filter_bookings(request):

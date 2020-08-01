@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
  {%  load static %}
+
 {% block content %}
+{% if error %}
+{{ error }}
+{% endif %}
 
 <h1 class="display-4 text-center">ABOUT MEMBERS</h1>
    <div class="container mt-5">
@@ -30,5 +34,21 @@
        {% endfor  %}
      </div>
     </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      {% if user.is_authenticated and booking.user != any.user %}
+        <a class="btn btn-primary btn-sm" href="{% url 'update' booking.id  %}" role="button" style="margin:9px";>Update</a>
+        <a class="btn btn-danger btn-sm" href="{% url 'delete' booking.id  %}" role="button" style="margin:9px";>Delete</a>
+      {% else %}
+      <a class="btn btn-primary btn-sm disabled" href="#" role="button" style="margin:9px";>Update</a>
+      <a class="btn btn-danger btn-sm disabled" href="#" role="button" style="margin:9px";>Delete</a>
+     {% endif %}
+    </ul>
+
+  </div>
+</nav>
 
 {% endblock %}
