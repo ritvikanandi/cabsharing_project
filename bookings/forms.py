@@ -4,6 +4,13 @@ from .models import Feedback
 from .models import createbooking, Member
 import datetime
 
+GENDER=(
+    ('all','all'),
+    ('girls only','girls only'),
+    ('boys only', 'boys only')
+)
+
+
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
@@ -18,10 +25,11 @@ class BookingForm(forms.ModelForm):
     peopletogether = forms.IntegerField(label = "People Together")
     luggage = forms.DecimalField(widget = forms.NumberInput, label = "Amount of luggage (in kg)",)
     budget = forms.CharField(label = "Your budget")
+    gender_choice =forms.ChoiceField(choices=GENDER, required=True)
 
     class Meta:
         model = createbooking
-        fields = ['time', 'date', 'pickup', 'destination' ,'peopletogether', 'luggage', 'budget']
+        fields = ['time', 'date', 'pickup', 'destination' ,'peopletogether', 'luggage', 'budget', 'gender_choice']
 
 
 class MemberForm(forms.ModelForm):

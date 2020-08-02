@@ -17,8 +17,9 @@
         <h5 class="card-text">Username:  {{user.username}}</h5>
         <h5 class="card-text">Email: {{user.email}}</h5>
         <h5 class="card-text">Hostel: {{user.booker.hostel}}</h5>
-      </div>
-    </div>
+        <a href="{% url 'password_change' %}" class="btn btn-primary" type="submit">Change Password</a>
+
+
   </div>
 </div>
    </div>

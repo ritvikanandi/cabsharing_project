@@ -4,12 +4,14 @@
  {% load widget_tweaks %}
 {% block content %}
 
-{% if error %}
 
-  <div class="alert alert-danger" role="alert">
-  {{error}}
-  </div>
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+{{message}}
+</div>
+{% endfor %}
 {% endif %}
 
    <div class="row">

@@ -4,11 +4,16 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% if error %}
-{{ error }}
-<br />
-<br />
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+{{message}}
+</div>
+{% endfor %}
 {% endif %}
+
+
+
 
    <div class = "container book-container">
 

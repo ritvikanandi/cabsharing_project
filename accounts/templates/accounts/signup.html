@@ -3,6 +3,12 @@
  {% load static %}           <!-- important to add -->
 {% block content %}
 
+{% if error %}
+<div class="alert alert-danger" role="alert">
+{{ error }}
+</div>
+{% endif %}
+
 <div class="container signup-container">
   <div class="row">
   <div class="col-md-4">
